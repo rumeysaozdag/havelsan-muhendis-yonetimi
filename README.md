@@ -19,11 +19,11 @@ Bu proje, Spring Boot mimarisi kullanılarak geliştirilmiş, uçtan uca (Full S
 * **Swagger Entegrasyonu:** API uçlarının `/swagger-ui/index.html` üzerinden test edilebilmesi.
 * **CORS:** Frontend ve Backend arasındaki haberleşme ayarları.
 
-## 📷 Ekran Görüntüleri
+### 📷 Ekran Görüntüleri
 
-| Personel Listesi | Swagger UI | Yeni Kayıt Ekrani |
-|------------------|------------|-------------------|
-| ![Liste](pictures/list-page.png) | ![Swagger](pictures/swagger-ui.png) | ![Yeni Kayıt](pictures/yeni-kayit.png) |
+| Personel Listesi | Yönetim Paneli | Yeni Kayıt Ekranı | Swagger UI |
+|:----------------:|:--------------:|:-----------------:|:----------:|
+| ![Liste](pictures/list-page.png) | ![Panel](pictures/panel.png) | ![Yeni Kayıt](pictures/yeni-kayit.png) | ![Swagger](pictures/swagger-ui.png) |
 
 ## 🚀 Nasıl Çalıştırılır?
 

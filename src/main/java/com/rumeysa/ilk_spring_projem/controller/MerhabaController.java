@@ -30,11 +30,10 @@ public class MerhabaController {
 	
 	@GetMapping("/muhendis/{isim}")
     public Muhendis DinamikmuhendisGetir(@PathVariable String isim) {
-        // Java nesnesi oluşturuyoruz
+        
         Muhendis m1 = new Muhendis(isim, "Yazılım Geliştirme", "Junior Engineer");
         
-        // Biz sadece nesneyi dönüyoruz (Return Object)
-        // Spring Boot bunu otomatik JSON yapacak!
+        
         return m1;
     }
 	@GetMapping("/muhendis/{isim}/{rutbe}")
