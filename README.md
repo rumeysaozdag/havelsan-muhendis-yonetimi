@@ -23,7 +23,7 @@ Bu proje, Spring Boot mimarisi kullanılarak geliştirilmiş, uçtan uca (Full S
 
 | Personel Listesi | Swagger UI | Yeni Kayıt Ekrani |
 |------------------|------------|-------------------|
-| ![Liste](screenshots/list-page.png) | ![Swagger](screenshots/swagger-ui.png) | ![Yeni Kayıt](screenshots/yeni-kayit.png) |
+| ![Liste](pictures/list-page.png) | ![Swagger](pictures/swagger-ui.png) | ![Yeni Kayıt](pictures/yeni-kayit.png) |
 
 ## 🚀 Nasıl Çalıştırılır?
 
