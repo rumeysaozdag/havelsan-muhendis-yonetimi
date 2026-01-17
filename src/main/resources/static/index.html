@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Havelsan Yönetim Paneli</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> </head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">🚀 Mühendis Yönetim Paneli</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">Yeni Personel Ekle</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label>İsim:</label>
+                        <input type="text" id="isim" class="form-control" placeholder="Örn: Ahmet">
+                    </div>
+                    <div class="mb-3">
+                        <label>Alan:</label>
+                        <input type="text" id="alan" class="form-control" placeholder="Örn: Siber Güvenlik">
+                    </div>
+                    <div class="mb-3">
+                        <label>Rütbe:</label>
+                        <input type="text" id="rutbe" class="form-control" placeholder="Örn: Uzman">
+                    </div>
+                    <button onclick="kaydet()" class="btn btn-primary w-100">Kaydet</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">Personel Listesi</div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>İsim</th>
+                                <th>Alan</th>
+                                <th>Rütbe</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabloGovdesi">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Sayfa açılınca listeyi otomatik getir
+    window.onload = verileriGetir;
+
+    // 1. LİSTELEME FONKSİYONU
+    function verileriGetir() {
+        fetch('/muhendis-listesi')
+            .then(response => response.json())
+            .then(data => {
+                const tablo = document.getElementById('tabloGovdesi');
+                tablo.innerHTML = ""; 
+                data.forEach(m => {
+                    tablo.innerHTML += `
+                        <tr>
+                            <td>${m.id}</td>
+                            <td>${m.isim}</td>
+                            <td>${m.alan}</td>
+                            <td>${m.rutbe}</td>
+                            <td>
+                                <button onclick="sil(${m.id})" class="btn btn-danger btn-sm">Sil 🗑️</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            });
+    }
+
+    // 2. KAYDETME FONKSİYONU (POST)
+    function kaydet() {
+        const veri = {
+            isim: document.getElementById('isim').value,
+            alan: document.getElementById('alan').value,
+            rutbe: document.getElementById('rutbe').value
+        };
+
+        fetch('/muhendis-ekle', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(veri)
+        })
+        .then(response => {
+            if (response.ok) {
+                Swal.fire('Başarılı!', 'Mühendis eklendi.', 'success'); // Güzel mesaj
+                verileriGetir(); // Tabloyu yenile
+                // Kutuları temizle
+                document.getElementById('isim').value = "";
+                document.getElementById('alan').value = "";
+                document.getElementById('rutbe').value = "";
+            } else {
+                Swal.fire('Hata!', 'Bilgileri kontrol et.', 'error');
+            }
+        });
+    }
+
+    // 3. SİLME FONKSİYONU (DELETE)
+    function sil(id) {
+        Swal.fire({
+            title: 'Emin misin?',
+            text: "Bu kayıt silinecek!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Sil'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('/muhendis-sil/' + id, { method: 'DELETE' })
+                    .then(res => {
+                        Swal.fire('Silindi!', 'Kayıt uçtu.', 'success');
+                        verileriGetir(); // Listeyi güncelle
+                    });
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
